@@ -1,0 +1,34 @@
+`timescale 1ns/1ps
+
+module priority_encoder_tb;
+
+reg [3:0] I;
+wire [1:0] Y;
+wire Valid;
+
+priority_encoder uut (
+    .I(I),
+    .Y(Y),
+    .Valid(Valid)
+);
+
+initial begin
+    $dumpfile("priority_encoder.vcd");
+    $dumpvars(0, priority_encoder_tb);
+
+    $display("Time\tInput\tOutput\tValid");
+    $monitor("%0t\t%b\t%b\t%b", $time, I, Y, Valid);
+
+    I = 4'b0000; #10;
+    I = 4'b0001; #10;
+    I = 4'b0010; #10;
+    I = 4'b0011; #10;
+    I = 4'b0100; #10;
+    I = 4'b0110; #10;
+    I = 4'b1000; #10;
+    I = 4'b1111; #10;
+
+    $finish;
+end
+
+endmodule
